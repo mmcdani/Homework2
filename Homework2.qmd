@@ -1,0 +1,87 @@
+---
+title: "Programming in Base R"
+format: html
+editor: visual
+---
+
+## Task 1: Basic Vector Practice 
+
+Suppose we have data from a medical experiment on blood pressure. 
+
+
+Assign objects pre-measurements and post-measurements 
+```{r}
+pre_bp <- c(120, 151, 125, 126, 115, 132, 132, 129, 134, 139, 127, 122, 127, 135, 133, 128, 147, 138, 140, 132)
+pre_bp
+
+post_bp <- c(127, 145, 135, 122, 115, 122, 123, 126, 126, 129, 132, 146, 120, 114, 121, 120, 128, 120, 133, 115)
+post_bp
+```
+
+Assign names to the vector elements using paste() function
+```{r}
+patient <- paste("Subject", 1:20, sep = "_")
+```
+
+Calculate the change in blood pressure for each patient by subtracting post-treatment measurements from pre-treatment measurements.Create Vector for this object.
+```{r}
+diff_bp <- c(pre_bp - post_bp)
+diff_bp
+```
+Calculate the average decrease in blood pressure across all patients using mean() function 
+```{r}
+mean(diff_bp)
+```
+
+Determine which patients experienced a decrease in blood pressure after treatment using which() function 
+
+return the indices and names associated with this type of change
+```{r}
+which (diff_bp > 0)
+```
+
+Create a vector for patients that experienced a decrease in blood pressure
+
+
+
+## Task 2: Basic Data Frame Practice 
+
+Create a data frame with four colums corresponding to the data above
+```{r}
+bp_df <- data.frame(patient,pre_bp,post_bp,diff_bp)
+```
+
+return only rows of the data frame where the diff bp columns is negative
+```{r}
+subset(patient, (diff_bp > 0))
+```
+
+Add a new column to the data frame corresponding to TRUE if the post_bp is less than 120 and FALSE if it is not
+```{r}
+subset(bp_df, diff_bp > 0)
+```
+
+Print the data frame out nicely in final document 
+```{r}
+knitr::kable(bp_df)
+```
+
+## Task 3: List Practice 
+
+create vectors for treatment and placebo group
+```{r}
+treatment <- c(138, 135, 147, 117, 152, 134, 114, 121, 131, 130)
+treatment
+
+placebo <- c(105, 136, 123, 130, 134, 143, 135, 139, 120, 124)
+```
+
+Create a new data frame with this data in it that is similar to the data frame from task two (including the new column of TRUE/FALSE)
+
+ Now create and store a list with two elements:
+ • 1st element named treatment and contains the first data frame you created.
+ • 2nd element named placebo and contains the second data frame you created.
+ 3. Access the first list element using three different types of syntax (the result can be a list or just the
+ data frame).
+ 4. Use your list from question 2. In one line of code, access the pre_bp column of the placebo data
+ frame
