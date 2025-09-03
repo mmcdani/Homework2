@@ -125,7 +125,7 @@ placebo_bp_df <- data.frame(placebo_patient,placebo_pre_bp,placebo_post_bp,place
 placebo_bp_df
 ```
 
- Now create and store a list with two elements:
+Now create and store a list with two elements:
  • 1st element named treatment and contains the first data frame you created.
  • 2nd element named placebo and contains the second data frame you created.
 ```{r}
@@ -134,8 +134,8 @@ list_bp
 ```
  
  
- 3. Access the first list element using three different types of syntax (the result can be a list or just the
- data frame).
+Access the first list element using three different types of syntax (the result can be a list or just the
+data frame).
 ```{r}
 list_bp["treatment"]
 list_bp[["treatment"]]
