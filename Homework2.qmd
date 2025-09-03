@@ -4,10 +4,11 @@ format: html
 editor: visual
 ---
 
+# Homework 2
+
 ## Task 1: Basic Vector Practice 
 
-Suppose we have data from a medical experiment on blood pressure. 
-
+Suppose we have data from a medical experiment on blood pressure. We want to determine that change in blood pressure before and after treatment. 
 
 Assign objects pre-measurements and post-measurements 
 ```{r}
@@ -21,44 +22,63 @@ post_bp
 Assign names to the vector elements using paste() function
 ```{r}
 patient <- paste("Subject", 1:20, sep = "_")
+patient
+```
+Create the same names for each vectors elements using the names() function
+```{r}
+names(pre_bp) <- patient
+names(post_bp) <- patient
 ```
 
-Calculate the change in blood pressure for each patient by subtracting post-treatment measurements from pre-treatment measurements.Create Vector for this object.
+Calculate the change in blood pressure for each patient by subtracting post-treatment measurements from pre-treatment measurements. Create a Vector for this object.
 ```{r}
 diff_bp <- c(pre_bp - post_bp)
 diff_bp
 ```
+
 Calculate the average decrease in blood pressure across all patients using mean() function 
 ```{r}
 mean(diff_bp)
 ```
 
-Determine which patients experienced a decrease in blood pressure after treatment using which() function 
-
-return the indices and names associated with this type of change
+Determine which patients experienced a decrease in blood pressure after treatment using which() function Return the indices and names associated with this type of change 
 ```{r}
-which (diff_bp > 0)
+which(diff_bp > 0)
 ```
 
-Create a vector for patients that experienced a decrease in blood pressure
+Subset the vector of differences to return those that have a positive change 
+```{r}
+decreased_bp <- diff_bp[diff_bp > 0]
+decreased_bp
+```
 
+Calculate the average decrease in blood pressure for those where the blood pressure decreased
+```{r}
+mean(decreased_bp)
+```
 
 
 ## Task 2: Basic Data Frame Practice 
 
-Create a data frame with four colums corresponding to the data above
+Create a data frame with four columns corresponding to the data above
 ```{r}
-bp_df <- data.frame(patient,pre_bp,post_bp,diff_bp)
+bp_df <- data.frame(patient,pre_bp,post_bp,diff_bp, row.names = NULL)
+bp_df
 ```
 
-return only rows of the data frame where the diff bp columns is negative
+Return only rows of the data frame where the diff bp columns is negative
 ```{r}
-subset(patient, (diff_bp > 0))
+subset(bp_df, (diff_bp < 0))
+```
+Determine which patients experienced a decrease in blood pressure after treatment using which() function Return the indices and names associated with this type of change 
+```{r}
+which(diff_bp > 0)
 ```
 
 Add a new column to the data frame corresponding to TRUE if the post_bp is less than 120 and FALSE if it is not
 ```{r}
-subset(bp_df, diff_bp > 0)
+bp_df$bp_under_120 <- bp_df$post_bp < 120
+bp_df
 ```
 
 Print the data frame out nicely in final document 
@@ -68,20 +88,63 @@ knitr::kable(bp_df)
 
 ## Task 3: List Practice 
 
-create vectors for treatment and placebo group
+Create vectors for before and after placebo
 ```{r}
-treatment <- c(138, 135, 147, 117, 152, 134, 114, 121, 131, 130)
-treatment
+placebo_pre_bp <- c(138, 135, 147, 117, 152, 134, 114, 121, 131, 130)
+placebo_pre_bp
 
-placebo <- c(105, 136, 123, 130, 134, 143, 135, 139, 120, 124)
+placebo_post_bp <- c(105, 136, 123, 130, 134, 143, 135, 139, 120, 124)
+placebo_post_bp
+```
+Assign names to the vector elements using paste() function
+```{r}
+placebo_patient <- paste("Subject", 1:10, sep = "_")
+placebo_patient
+```
+
+Create the same names for each vectors elements using the names() function
+```{r}
+names(placebo_pre_bp) <- placebo_patient
+names(placebo_post_bp) <- placebo_patient
+```
+
+Calculate the change in blood pressure for each patient by subtracting post-placebo measurements from pre-placebo measurements. Create a Vector for this object.
+```{r}
+placebo_diff_bp <- c(placebo_pre_bp - placebo_post_bp)
+placebo_diff_bp
+```
+Create a vector corresponding to TRUE if the placebo_post_bp is less than 120 and FALSE if it is not
+```{r}
+placebo_bp_under_120 <- placebo_post_bp < 120
+placebo_bp_under_120
 ```
 
 Create a new data frame with this data in it that is similar to the data frame from task two (including the new column of TRUE/FALSE)
+```{r}
+placebo_bp_df <- data.frame(placebo_patient,placebo_pre_bp,placebo_post_bp,placebo_diff_bp,placebo_bp_under_120, row.names = NULL)
+placebo_bp_df
+```
 
  Now create and store a list with two elements:
  • 1st element named treatment and contains the first data frame you created.
  • 2nd element named placebo and contains the second data frame you created.
+```{r}
+list_bp <- list(treatment = bp_df, placebo = placebo_bp_df)
+list_bp
+```
+ 
+ 
  3. Access the first list element using three different types of syntax (the result can be a list or just the
  data frame).
- 4. Use your list from question 2. In one line of code, access the pre_bp column of the placebo data
- frame
+```{r}
+list_bp["treatment"]
+list_bp[["treatment"]]
+list_bp$treatment
+```
+
+In one line of code, access the pre_bp column of the placebo data frame
+```{r}
+list_bp$placebo$placebo_pre_bp
+```
+ 
+ 
